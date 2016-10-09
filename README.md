@@ -67,6 +67,12 @@ $ chsh -s /usr/local/bin/zsh
 
 ### Configuration
 
+To make ZSH comply with the XDG Base Directory Specification, ie. zsh configuration folder being `~/.config/zsh`
+
+```
+$ ln -s <path_to_this_repo_zsh_env> ~/.zshenv
+```
+
 Execute the following commands to install the missing packages
 
 ```
