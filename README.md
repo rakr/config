@@ -6,14 +6,39 @@ git
 neovim/neovim/neovim
 zsh
 elixir
+the_silver_searcher
+python
+python3
+ctags
+zsh-completions
+rbenv
+ruby-build
+
+zsh-autosuggestions
+zsh-completions
+zsh-syntax-highlighting
+
 
 ## brew casks
 
 iterm2
 marked
 
+## Apple Command Line tools
+
+```
+$ xcode-select --install
+```
+
 ## Neovim
 
+```
+brew tap neovim/neovim
+brew install neovim --HEAD --with-release
+brew install python3
+pip2 install neovim
+pip3 install neovim
+```
 
 
 ## ZSH
@@ -41,5 +66,19 @@ $ chsh -s /usr/local/bin/zsh
 ```
 
 ### Configuration
+
+Execute the following commands to install the missing packages
+
+```
+$ brew install zsh-autosuggestions zsh-completions zsh-syntax-highlighting
+```
+
+`compaudit` may complain about insecure folder, run the following commands to solve this issue (On Mac OS Sierra)
+
+```
+$ cd /usr/local/share/
+$ sudo chmod -R 755 zsh
+$ sudo chown -R root:staff zsh
+```
 
 
