@@ -8,9 +8,11 @@ endfunction
 call plug#begin('~/.config/nvim/plugged')
   " Appearance
   Plug '~/.workspaces/vim-colorschemes/firewatch'
+  Plug '~/.workspaces/vim-colorschemes/one'
   Plug 'itchyny/lightline.vim'
   Plug 'itchyny/lightline-powerful'
   Plug 'jszakmeister/vim-togglecursor'
+  Plug 'jacoborus/tender.vim'
 
   " Bunch of colorschemes
   Plug 'xolox/vim-colorscheme-switcher'
@@ -22,6 +24,7 @@ call plug#begin('~/.config/nvim/plugged')
 
   " Enhance navigation
   Plug 'rking/ag.vim'
+  Plug 'mmorearty/elixir-ctags'
   Plug 'xolox/vim-easytags'
   Plug 'ctrlpvim/ctrlp.vim'
   Plug 'scrooloose/nerdtree'
@@ -35,7 +38,7 @@ call plug#begin('~/.config/nvim/plugged')
   " Language plugins
   Plug 'lambdatoast/elm.vim'
   Plug 'elixir-lang/vim-elixir'
-  Plug 'mmorearty/elixir-ctags'
+  Plug 'jelera/vim-javascript-syntax'
 
   " Other utilities
   Plug 'guns/xterm-color-table.vim' " All 256 xterm colors with their RGB equivalents
@@ -93,7 +96,7 @@ let g:hydromel_italics=1
 let g:two_firewatch_italics=1
 let g:one_allow_italics = 1
 let g:material_allow_italics = 1
-colo firewatch-light
+colo one-light
 " }}}
 
 " Mappings {{{
@@ -204,6 +207,72 @@ let g:go_highlight_fields = 1
 let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+" }}}
+
+" Lightline {{{
+set laststatus=2
+let g:lightline = {
+      \ 'colorscheme': 'one_light',
+      \ 'mode_map': { 'c': 'NORMAL' },
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+      \ },
+      \ 'component_function': {
+      \   'modified': 'LightLineModified',
+      \   'readonly': 'LightLineReadonly',
+      \   'fugitive': 'LightLineFugitive',
+      \   'filename': 'LightLineFilename',
+      \   'fileformat': 'LightLineFileformat',
+      \   'filetype': 'LightLineFiletype',
+      \   'fileencoding': 'LightLineFileencoding',
+      \   'mode': 'LightLineMode',
+      \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '│', 'right': '│' }
+      \ }
+
+      "\ 'separator': { 'left': '', 'right': '' },
+      "\ 'subseparator': { 'left': '', 'right': '' }
+function! LightLineModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '●' : &modifiable ? '' : '-'
+endfunction
+
+function! LightLineReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⊗' : ''
+endfunction
+
+function! LightLineFilename()
+  return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \  &ft == 'unite' ? unite#get_status_string() :
+        \  &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+endfunction
+
+function! LightLineFugitive()
+  if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
+    let branch = fugitive#head()
+    return branch !=# '' ? '⌥  '.branch : ''
+  endif
+  return ''
+endfunction
+
+function! LightLineFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightLineFiletype()
+  return winwidth(0) > 70 ? (&filetype !=# '' ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightLineFileencoding()
+  return winwidth(0) > 70 ? (&fenc !=# '' ? &fenc : &enc) : ''
+endfunction
+
+function! LightLineMode()
+  return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
 " }}}
 
 " NeoSnippet {{{
