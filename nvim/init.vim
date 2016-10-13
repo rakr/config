@@ -1,11 +1,15 @@
+" Update remote plugins on demand {{{
 function! DoRemote(arg)
   if (has("nvim"))
     UpdateRemotePlugins
   endif
 endfunction
+" }}}
 
-" Plugins {{{
+" Plugins =========================================================== {{{
+
 call plug#begin('~/.config/nvim/plugged')
+
   " Appearance
   Plug '~/.workspaces/vim-colorschemes/firewatch'
   Plug '~/.workspaces/vim-colorschemes/one'
@@ -14,38 +18,63 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'jszakmeister/vim-togglecursor'
   Plug 'jacoborus/tender.vim'
 
-  " Bunch of colorschemes
-  Plug 'xolox/vim-colorscheme-switcher'
-  Plug 'xolox/vim-misc' " vim-colorscheme-switcher dependency
-
   " Auto completion
   Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
   Plug 'zchee/deoplete-jedi'
+  Plug 'Shougo/neosnippet.vim'
+  Plug 'Shougo/neosnippet-snippets'
 
-  " Enhance navigation
+  " Colorschemes and related
+  Plug 'xolox/vim-colorscheme-switcher'
+  Plug 'xolox/vim-misc' " vim-colorscheme-switcher dependency
+
+  " Enhanced edit
+  Plug 'tpope/vim-surround'
+  Plug 'scrooloose/nerdcommenter'
+
+  " Git
+  Plug 'tpope/vim-fugitive'
+  Plug 'airblade/vim-gitgutter'
+
+  " Navigation
   Plug 'rking/ag.vim'
-  Plug 'mmorearty/elixir-ctags'
-  Plug 'xolox/vim-easytags'
   Plug 'ctrlpvim/ctrlp.vim'
   Plug 'scrooloose/nerdtree'
-  Plug 'majutsushi/tagbar'
 
   " Neomake
   Plug 'neomake/neomake'
-  Plug 'Shougo/neosnippet.vim'
-  Plug 'Shougo/neosnippet-snippets'
+
+  " Tags
+  Plug 'majutsushi/tagbar', { 'on' : 'TagbarToggle' }
+  Plug 'xolox/vim-easytags'
+  Plug 'mmorearty/elixir-ctags'
 
   " Language plugins
   Plug 'lambdatoast/elm.vim'
   Plug 'elixir-lang/vim-elixir'
   Plug 'jelera/vim-javascript-syntax'
+  " language specific
+  " Golang
+  Plug 'fatih/vim-go', { 'for' : 'go', 'do': ':GoInstallBinaries' }
+  " Javascript
+  Plug 'pangloss/vim-javascript', { 'for' : 'javascript' }
+  " Apex & Visualforce
+  Plug 'ejholmes/vim-forcedotcom', { 'for' : ['apex', 'visualforce'] }
+  " Javascript
+  Plug 'pangloss/vim-javascript'
+  if executable('npm')
+    Plug 'ternjs/tern_for_vim', { 'for' : 'javascript', 'do' : 'npm install' }
+  endif
 
   " Other utilities
   Plug 'guns/xterm-color-table.vim' " All 256 xterm colors with their RGB equivalents
+  " Plug 'gcmt/taboo.vim' " Better tabline management with naming capabilities
 call plug#end()
+
 " }}}
 
-" Global configuration {{{
+" Global Configuration ============================================== {{{
+
 if (has("termguicolors"))
   set termguicolors
 endif
@@ -60,6 +89,7 @@ set number
 set noswapfile
 set nobackup
 set nowritebackup
+
 set scrolloff=5
 set hidden
 set wildmode=longest:list,full
@@ -91,19 +121,25 @@ syntax on
 " Recommended: continuous vertical split line.
 set fillchars=vert:\│
 
-set background=light
+set list lcs=trail:·,tab:»·
+set background=dark
 let g:hydromel_italics=1
 let g:two_firewatch_italics=1
 let g:one_allow_italics = 1
 let g:material_allow_italics = 1
-colo one-light
+colo firewatch-dark
+
 " }}}
 
-" Mappings {{{
+" Mappings ========================================================== {{{
+
+let mapleader=','
 let g:mapleader=','
+imap jk <ESC>
+
 " Better navigation between buffers and tabs
-nnoremap <leader>]  :bn<cr>
-nnoremap <leader>[  :bp<cr>
+nnoremap <leader>] :bn<cr>
+nnoremap <leader>[ :bp<cr>
 nnoremap <leader><leader>[ :tabp<cr>
 nnoremap <leader><leader>] :tabn<cr>
 
@@ -140,18 +176,22 @@ set pastetoggle=<f6>
 " Fold Mapping
 nnoremap <space> za
 vnoremap <space> za
+
 " }}}
 
-" NERDTree {{{
+" NerdTree ========================================================== {{{
+
 map <leader>n :NERDTreeToggle<cr>
 let g:NERDTreeShowHidden=1
 let g:NERDTreeWinSize=30
 let g:NERDTreeAutoDeleteBuffer=1
 let g:NERDTreeShowHidden=1
 let g:NERDTreeShowBookmarks=1
+
 " }}}
 
-" CtrlP {{{
+" CtrlP ============================================================= {{{
+
 nnoremap <silent> ,p :CtrlP<CR>
 nnoremap <silent> ,o :CtrlPTag<CR>
 
@@ -167,9 +207,11 @@ if executable('ag')
 endif
 let g:ctrlp_show_hidden = 1
 let g:ctrlp_working_path_mode = 'ra'
+
 "}}}
 
-" Deoplete {{{
+" Deoplete ========================================================== {{{
+
 let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_debug = 1
 call deoplete#custom#set('_', 'min_pattern_length', 2)
@@ -194,9 +236,11 @@ imap     <expr><C-u> pumvisible() ? "\<PageUp>\<C-p>\<C-n>" : "\<C-u>"
 
 " Undo completion
 inoremap <expr><C-g> deoplete#mappings#undo_completion()
+
 "}}}
 
-" Go Support {{{
+" Go Support ======================================================== {{{
+
 " use goimports for formatting
 let g:go_fmt_command = "goimports"
 
@@ -207,12 +251,14 @@ let g:go_highlight_fields = 1
 let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
+
 " }}}
 
-" Lightline {{{
+" LightLine ========================================================= {{{
+
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'one_light',
+      \ 'colorscheme': 'firewatch_dark',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
@@ -227,18 +273,18 @@ let g:lightline = {
       \   'fileencoding': 'LightLineFileencoding',
       \   'mode': 'LightLineMode',
       \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '│', 'right': '│' }
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' }
       \ }
+      "\ 'separator': { 'left': '', 'right': '' },
+      "\ 'subseparator': { 'left': '│', 'right': '│' }
 
-      "\ 'separator': { 'left': '', 'right': '' },
-      "\ 'subseparator': { 'left': '', 'right': '' }
 function! LightLineModified()
   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '●' : &modifiable ? '' : '-'
 endfunction
 
 function! LightLineReadonly()
-  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⊗' : ''
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '🔒 ' : ''
 endfunction
 
 function! LightLineFilename()
@@ -253,7 +299,7 @@ endfunction
 function! LightLineFugitive()
   if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
     let branch = fugitive#head()
-    return branch !=# '' ? '⌥  '.branch : ''
+    return branch !=# '' ? ' '.branch : ''
   endif
   return ''
 endfunction
@@ -273,9 +319,11 @@ endfunction
 function! LightLineMode()
   return winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
+
 " }}}
 
-" NeoSnippet {{{
+" Neosnippet ======================================================== {{{
+
 " Plugin key-mappings.
 imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 smap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -302,22 +350,11 @@ function! s:is_whitespace()
   let l:col = col('.') - 1
   return !l:col || getline('.')[l:col - 1]  =~? '\s'
 endfunction
-"}}}
-"
-" NERDTree {{{
-map <leader>n :NERDTreeToggle<cr>
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-let g:NERDTreeShowHidden=1
-let g:NERDTreeWinSize=30
-let g:NERDTreeAutoDeleteBuffer=1
-let g:NERDTreeShowHidden=1
-let g:NERDTreeShowBookmarks=1
-let g:NERDTreeActivateNode="<space>"
-"let g:NERDTreeHijackNetrw=1
-" }}}
 
-" TagBar {{{
+"}}}
+
+" Tagbar ============================================================ {{{
+
 nmap <F12> :TagbarToggle<CR>
 
 autocmd FileType tagbar setlocal nocursorline nocursorcolumn
@@ -368,9 +405,11 @@ let g:tagbar_type_go = {
 \ }
 
 " let g:autotagTagsFile = ".tags"
+
 " }}}
 
-" NeoMake {{{
+" Neomake =========================================================== {{{
+
 let g:test_strategy = "neovim"
 let g:neomake_open_list = 0
 let g:neomake_list_height = 5
@@ -393,7 +432,7 @@ let g:neomake_error_sign   = {'text': '▶︎', 'texthl': 'ErrorMsg'}
 let g:neomake_warning_sign = {'text': '▵', 'texthl': 'MoreMsg'}
 let g:neomake_message_sign = {'text': '!', 'texthl': 'MoreMsg'}
 let g:neomake_info_sign    = {'text': '●', 'texthl': 'MoreMsg'}
+
 "}}}
 
 " vim: fdm=marker:
-
