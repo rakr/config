@@ -5,3 +5,6 @@
   helper = osxkeychain
 [core]
   excludesfile = /Users/rakr/.gitignore
+[alias]
+  # A better git log with colors and graph
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(green)%d%Creset %s %C(yellow)(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
