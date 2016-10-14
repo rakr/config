@@ -34,9 +34,9 @@ select-word-style bash
 ###
 # Go
 ##
-export GOPATH=~/.development/go
-export GOROOT=~/.development/go
-export GOBIN=~/.development/go/bin
+export GOPATH=~/.go
+export GOROOT=~/.go
+export GOBIN=~/.go/bin
 export PATH=$PATH:$GOROOT/bin
 
 ###
@@ -50,7 +50,7 @@ source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.zsh
 fpath=(~/.config/zsh/zsh-completions/src $fpath)
 autoload -U compinit
 compinit
-zmodload -i zsh/complist        
+zmodload -i zsh/complist
 setopt hash_list_all            # hash everything before completion
 setopt completealiases          # complete alisases
 setopt always_to_end            # when completing from the middle of a word, move the cursor to the end of the word    
