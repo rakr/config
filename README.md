@@ -23,6 +23,7 @@ zsh-syntax-highlighting
 
 iterm2
 marked
+elm-platform
 
 ## Apple Command Line tools
 
