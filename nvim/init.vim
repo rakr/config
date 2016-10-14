@@ -20,8 +20,8 @@ call plug#begin('~/.config/nvim/plugged')
 
   " Auto completion
   Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-  Plug 'zchee/deoplete-jedi'
-  Plug 'Shougo/neosnippet.vim'
+  Plug 'zchee/deoplete-jedi', { 'do': function('DoRemote') }
+  Plug 'Shougo/neosnippet.vim', { 'do': function('DoRemote') }
   Plug 'Shougo/neosnippet-snippets'
 
   " Colorschemes and related
@@ -273,11 +273,11 @@ let g:lightline = {
       \   'fileencoding': 'LightLineFileencoding',
       \   'mode': 'LightLineMode',
       \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '', 'right': '' }
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '│', 'right': '│' }
       \ }
-      "\ 'separator': { 'left': '', 'right': '' },
-      "\ 'subseparator': { 'left': '│', 'right': '│' }
+      "\ 'separator': { 'left': '', 'right': '' },
+      "\ 'subseparator': { 'left': '', 'right': '' }
 
 function! LightLineModified()
   return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '●' : &modifiable ? '' : '-'
