@@ -13,6 +13,7 @@ ctags
 zsh-completions
 rbenv
 ruby-build
+tmux
 
 zsh-autosuggestions
 zsh-completions
