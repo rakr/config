@@ -2,29 +2,29 @@
 
 ## brew
 
-git
-neovim/neovim/neovim
-zsh
-elixir
-the_silver_searcher
-python
-python3
-ctags
-zsh-completions
-rbenv
-ruby-build
-tmux
+* git
+* neovim/neovim/neovim
+* zsh
+* elixir
+* the_silver_searcher
+* python
+* python3
+* ctags
+* zsh-completions
+* rbenv
+* ruby-build
+* tmux
 
-zsh-autosuggestions
-zsh-completions
-zsh-syntax-highlighting
+* zsh-autosuggestions
+* zsh-completions
+* zsh-syntax-highlighting
 
 
 ## brew casks
 
-iterm2
-marked
-elm-platform
+* iterm2
+* marked
+* elm-platform
 
 ## Apple Command Line tools
 
