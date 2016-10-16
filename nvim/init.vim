@@ -47,28 +47,38 @@ call plug#begin('~/.config/nvim/plugged')
   " Tags
   Plug 'majutsushi/tagbar', { 'on' : 'TagbarToggle' }
   Plug 'xolox/vim-easytags'
-  Plug 'mmorearty/elixir-ctags'
 
+  """
   " Language plugins
-  Plug 'lambdatoast/elm.vim'
-  Plug 'elixir-lang/vim-elixir'
-  Plug 'jelera/vim-javascript-syntax'
-  " language specific
-  " Golang
-  Plug 'fatih/vim-go', { 'for' : 'go', 'do': ':GoInstallBinaries' }
-  " Javascript
-  Plug 'pangloss/vim-javascript', { 'for' : 'javascript' }
+  """
+
   " Apex & Visualforce
   Plug 'ejholmes/vim-forcedotcom', { 'for' : ['apex', 'visualforce'] }
-  " Javascript
-  Plug 'pangloss/vim-javascript'
+
+  " elm
+  Plug 'lambdatoast/elm.vim'
+
+  " Elixir
+  Plug 'elixir-lang/vim-elixir'
+  Plug 'mmorearty/elixir-ctags'
+
+  " Golang
+  Plug 'fatih/vim-go', { 'for' : 'go', 'do': ':GoInstallBinaries' }
+
+  " JavaScript
+  Plug 'jelera/vim-javascript-syntax'
+  Plug 'pangloss/vim-javascript', { 'for' : 'javascript' }
   if executable('npm')
     Plug 'ternjs/tern_for_vim', { 'for' : 'javascript', 'do' : 'npm install' }
   endif
 
+  " Tmux configuration file
+  Plug 'tmux-plugins/vim-tmux'
+
+
   " Other utilities
   Plug 'guns/xterm-color-table.vim' " All 256 xterm colors with their RGB equivalents
-  " Plug 'gcmt/taboo.vim' " Better tabline management with naming capabilities
+  Plug 'edkolev/tmuxline.vim' " Create a tmux status line using lightline colors
 call plug#end()
 
 " }}}
@@ -241,6 +251,7 @@ inoremap <expr><C-g> deoplete#mappings#undo_completion()
 
 " Go Support ======================================================== {{{
 
+let g:go_bin_path = expand('~/.go/bin')
 " use goimports for formatting
 let g:go_fmt_command = "goimports"
 
@@ -435,4 +446,14 @@ let g:neomake_info_sign    = {'text': '●', 'texthl': 'MoreMsg'}
 
 "}}}
 
+let g:tmuxline_powerline_separators = 0
+let g:tmuxline_preset = 'full'
+"let g:tmuxline_preset = {
+      "\'a'    : '#S',
+      "\'c'    : ['#(whoami)', '#(uptime | cud -d " " -f 1,2,3)'],
+      "\'win'  : ['#I', '#W'],
+      "\'cwin' : ['#I', '#W', '#F'],
+      "\'x'    : '#(date)',
+      "\'y'    : ['%R', '%a', '%Y'],
+      "\'z'    : '#H'}
 " vim: fdm=marker:
