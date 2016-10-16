@@ -137,7 +137,7 @@ let g:hydromel_italics=1
 let g:two_firewatch_italics=1
 let g:one_allow_italics = 1
 let g:material_allow_italics = 1
-colo firewatch-dark
+colo firewatch-light
 
 " }}}
 
@@ -269,7 +269,7 @@ let g:go_highlight_build_constraints = 1
 
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'firewatch_dark',
+      \ 'colorscheme': 'firewatch_light',
       \ 'mode_map': { 'c': 'NORMAL' },
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
