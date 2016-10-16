@@ -17,3 +17,6 @@ unbind %
 
 # Reload configuration file
 bind r source-file ~/.tmux.conf
+
+# Snappier Esc
+set -s escape-time 0
