@@ -14,3 +14,6 @@ bind | split-window -h
 bind - split-window -v
 unbind '"'
 unbind %
+
+# Reload configuration file
+bind r source-file ~/.tmux.conf
