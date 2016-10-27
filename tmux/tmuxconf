@@ -1,5 +1,7 @@
 # Override terminal to display correctly true colors in Neovim in Vim
 set -g terminal-overrides ",xterm-256color-italic:Tc"
+#set -as terminal-overrides ',xterm*:sitm=\E[3m'
+set -g terminal-overrides ',xterm*:sitm=\E[3m'
 
 # Source the status bar
 if-shell "test -f ~/.config/tmux/tmuxline.conf" "source ~/.config/tmux/tmuxline.conf"
