@@ -1,3 +1,5 @@
 /nvim/autoload/plug.*
 nvim/plugged/
 configstore/
+nvim/sessions
+nvim/undo
