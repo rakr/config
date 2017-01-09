@@ -4,3 +4,4 @@ configstore/
 nvim/sessions
 nvim/undo
 fisherman/
+fish/fishd.*
