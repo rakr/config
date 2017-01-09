@@ -163,8 +163,9 @@ call plug#begin()
     " I use spinach, not cucumber!
     let g:test#ruby#cucumber#executable = 'spinach'
 
-  " git support from dat tpope
+  " git support
   Plug 'tpope/vim-fugitive'
+  Plug 'airblade/vim-gitgutter'
 
   " github support from dat tpope
   Plug 'tpope/vim-rhubarb'
