@@ -1,1 +1,0 @@
-/Users/rakr/.config/fisherman/pure/installer.fish
