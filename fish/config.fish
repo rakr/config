@@ -2,6 +2,9 @@ set fisher_home ~/.local/share/fisherman
 set fisher_config ~/.config/fisherman
 source $fisher_home/config.fish
 
+# Set TERM for tmux essentially
+set -gx TERM xterm-256color-italic;
+
 # vi mode
 # fish_vi_key_bindings
 
